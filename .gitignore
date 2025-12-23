@@ -1,0 +1,31 @@
+##### Hugo build output
+/public/
+/resources/
+/resources/_gen/
+/hugo_stats.json
+/.hugo_build.lock
+
+##### Node/Tailwind/PostCSS (if used by theme)
+node_modules/
+**/node_modules/
+.cache/
+*.log
+
+##### OS files
+.DS_Store
+
+##### IDE/editor
+.vscode/
+.idea/
+*.swp
+
+##### Environment files
+.env
+.env.*
+!.env.example
+
+##### Theme-specific generated files (keep theme sources tracked)
+themes/*/node_modules/
+themes/*/resources/
+themes/*/.hugo_build.lock
+themes/*/public/
