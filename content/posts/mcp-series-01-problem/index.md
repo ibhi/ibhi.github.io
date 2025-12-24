@@ -20,8 +20,6 @@ AI applications struggle with fragmented context handling. MCP (Model Context Pr
 - **Security & Permissions:** Sharing sensitive context (e.g., private documents) across services is error‑prone and insecure without a common contract.
 - **User Experience Friction:** End‑users see inconsistent capabilities when switching between AI assistants (e.g., switching from a desktop UI like Claude Desktop to a web‑based chatbot), causing confusion and reduced trust.
 - **Fragmentation of Knowledge:** Context is often trapped in silos—chat logs, GitHub issues, local files, Slack threads—making it difficult for AI systems to access the right information at the right time.
-- **Visual Overview:**
-  {{< figure src="/images/mcp/before_vs_after_mcp.png" alt="Pain Points Diagram" >}}
 
 > *“The biggest bottleneck in AI workflows today is not the model itself, but how context is passed around.”* – Industry observation
 
@@ -49,9 +47,10 @@ With MCP, any AI system can:
 - **Securely** request execution of those tools.
 - **Exchange** rich, structured context without reinventing parsing logic.
 
+{{< figure src="/images/mcp/before_vs_after_mcp.png" alt="Pain Points Diagram" >}}
 ## 4. How MCP Changes the Workflow
 
-```mermaid
+{{< mermaid >}}
 flowchart LR
     P[User / LLM Prompt] --> A[AI Application]
     A -->|initialize| B(MCP Server)
@@ -61,13 +60,14 @@ flowchart LR
     C -->|evaluate| B
     B -->|final context| A
     A -->|final context| P
-```
+{{< /mermaid >}}
 
 - **Step 1:** The application opens a connection (STDIO, SSE, or HTTP).
 - **Step 2:** It asks the server what tools are available (`list_tools`).
 - **Step 3:** It calls the desired tool (`call_tool`) and receives typed results.
 - **Step 4:** The server updates its internal context, which the AI can then reason over.
 
+{{< figure src="/images/mcp/mcp_workflow.png" alt="High‑Level MCP Flow" >}}
 ## 5. Benefits for Developers
 
 - **Interoperability:** Swap out back‑ends without rewriting context‑passing code.
@@ -76,15 +76,26 @@ flowchart LR
 - **Testing Friendly:** Mock tool responses simplify unit testing.
 
 ---
-{{< figure src="/images/mcp/mcp_workflow.png" alt="High‑Level MCP Flow" >}}
-
 
 ## 6. **Hands‑On Mini‑Lab (Optional): Your First MCP Server**
 
-1. **Install the SDK (if you haven’t already)**
-   {{< shell >}}
-   pip install "mcp[fastmcp]"
-   {{</shell>}}
+1. **Install the SDK (if you haven't already)**
+
+   {{< tabs >}}
+
+       {{< tab label="pip" >}}
+       {{< shell >}}
+       pip install "mcp[fastmcp]"
+       {{< /shell >}}
+       {{< /tab >}}
+
+       {{< tab label="uv" >}}
+       {{< shell >}}
+       uv add "mcp[fastmcp]"
+       {{< /shell >}}
+       {{< /tab >}}
+
+   {{< /tabs >}}
 
 2. **Create the server file**
    Create `weather_server.py` with the following content:
@@ -129,7 +140,8 @@ flowchart LR
    3. **Run the dev server**
    {{< shell >}}
    mcp dev weather_server.py
-   {{ </shell>}}
+   cd test
+   {{< /shell >}}
 
 This starts a live‑reload server and opens a small web UI (the **MCP Dev Inspector**) where you can click "Execute" on `get_weather` and see the raw JSON‑RPC request/response. This visual bridge is the easiest way to explore your tool without writing a client script.
 {{< figure src="/images/mcp/mcp_inspector.png" alt="High‑Level MCP Flow" >}}
