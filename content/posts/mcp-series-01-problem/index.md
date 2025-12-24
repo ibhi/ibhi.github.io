@@ -84,22 +84,22 @@ flowchart LR
    {{< tabs >}}
 
        {{< tab label="pip" >}}
-       {{< shell >}}
+       ```bash
        pip install "mcp[fastmcp]"
-       {{< /shell >}}
+       ```
        {{< /tab >}}
 
        {{< tab label="uv" >}}
-       {{< shell >}}
+       ```bash
        uv add "mcp[fastmcp]"
-       {{< /shell >}}
+       ```
        {{< /tab >}}
 
    {{< /tabs >}}
 
 2. **Create the server file**
    Create `weather_server.py` with the following content:
-   ```python
+   ```python {linenos=inline style=emacs}
    import datetime
    from fastmcp import FastMCP
 
@@ -138,10 +138,10 @@ flowchart LR
    ```
 
    3. **Run the dev server**
-   {{< shell >}}
+   ```bash
    mcp dev weather_server.py
    cd test
-   {{< /shell >}}
+   ```
 
 This starts a live‑reload server and opens a small web UI (the **MCP Dev Inspector**) where you can click "Execute" on `get_weather` and see the raw JSON‑RPC request/response. This visual bridge is the easiest way to explore your tool without writing a client script.
 {{< figure src="/images/mcp/mcp_inspector.png" alt="High‑Level MCP Flow" >}}
