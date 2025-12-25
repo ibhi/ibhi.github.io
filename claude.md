@@ -31,23 +31,6 @@ blog/
 └── public/              # Generated site output
 ```
 
-## Custom Shortcodes
-
-### `shell`
-Located at `layouts/shortcodes/shell.html`, this shortcode creates styled shell command blocks with syntax highlighting and a "sh" badge that appears on hover.
-
-**Usage**:
-```markdown
-{{< shell >}}
-hugo server
-{{< /shell >}}
-```
-
-**Features**:
-- Syntax highlighting for bash/shell commands
-- Hover-to-show "sh" badge in top-right corner
-- Responsive design with dark mode support
-
 ## Commands
 
 ### Development
@@ -115,6 +98,9 @@ If UI elements don't render correctly:
 3. Check browser console for errors
 4. Then based on your findinhgs, fix the relevant part of the codebase.
 
+### Mermaid Diagrams Not Rendering
+If Mermaid diagrams do not render due to syntax errors:
+1. Most of the syntax errors are due to `(` and `)` are not escaped within string literals.
 
 ## Notes
 
