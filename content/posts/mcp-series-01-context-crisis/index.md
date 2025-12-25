@@ -21,25 +21,25 @@ To fix this, developers have spent the last two years building Pipelines:
 4. Paste it into the prompt.
 This works for a weekend prototype. It fails in production.
 
-## 2. The $N \times M$ Matrix of Doom
+## 2. The *N × M* Matrix of Doom
 Here is the real problem. We don't just have one AI (Claude); we have dozens (ChatGPT, Cursor, IDEs, Custom Agents). We don't just have one data source; we have hundreds (Postgres, Slack, Linear, Google Drive).
 Without a standard, you have to build a custom integration for every single combination.
 
 {{< mermaid >}}
-LR
+graph TD
     subgraph "The Old Way (N x M Mess)"
-        A[Claude] -.-> G[GitHub]
-        A -.-> S[Slack]
-        A -.-> D[Drive]
-        B[Cursor] -.-> G
-        B -.-> S
-        C[Custom Agent] -.-> D
+        A[Claude] --> G[GitHub]
+        A --> S[Slack]
+        A --> D[Drive]
+        B[Cursor] --> G
+        B --> S
+        C[Custom Agent] --> D
     end
 {{< /mermaid >}}
 
-This is the $N \times M$ problem. If you have 5 AI clients and 10 tools, you need to maintain 50 different integration scripts. It is brittle, insecure, and unscalable.
+This is the *N × M* problem. If you have 5 AI clients and 10 tools, you need to maintain 50 different integration scripts. It is brittle, insecure, and unscalable.
 
-{{< figure src="/images/mcp/before_vs_after_mcp.png" alt="The N x M Problem Diagram" >}}
+
 
 ## 3. The Solution: A Universal Socket (MCP)
 Enter the Model Context Protocol (MCP).
@@ -60,7 +60,9 @@ graph TD
 
     style Protocol fill:#f96,stroke:#333,stroke-width:4px
 {{< /mermaid >}}
-!
+
+{{< figure src="/images/mcp/before_vs_after_mcp.png" alt="The N x M Problem Diagram" >}}
+
 ## 4. Why This Changes Everything
 1. **Write Once, Run Everywhere**: Build a tool to query your internal SQL database once. It now works in your IDE, your chat bot, and your automated workflows.
 2. **Data stays where it belongs**: Instead of ETL-ing your data into a Vector DB, MCP lets the AI fetch data on demand from the source of truth.
