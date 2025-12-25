@@ -9,8 +9,6 @@ tags: ["MCP", "GenAI", "AI Agents", "Integration"]
 ## TL;DR:
 Building AI agents today feels like writing printer drivers in the 90s. We face an $N \times M$ integration problem where every AI app needs a custom connector for every data source. MCP (Model Context Protocol) solves this by acting as a universal open standard—effectively the USB-C for AI applications.
 
-# Part 1 – The Context Crisis: Why AI Needs a USB C Port
-
 ## 1. The "Smart" Model, "Stupid" Context Problem
 Imagine you have the smartest intern in the world (your LLM). They have read every book in the library. But if you ask them, "Why did our Q3 deployment fail?", they hallucinate. 
 Why? **Because they don't have your context**.
@@ -70,4 +68,4 @@ graph TD
 4. **Ecosystem Growth**: Just like USB-C led to a boom in peripherals, MCP will enable a thriving ecosystem of AI tools and integrations.
 
 ## 5. Next Steps
-In the next part, we'll dive into the technical details of the MCP specification—how the protocol works, its core capabilities, and how you can start building MCP-compliant tools today. Stay tuned!
+In the next [part]({{< ref "/posts/mcp-series-02-the-spec" >}}), we'll dive into the technical details of the MCP specification—how the protocol works, its core capabilities, and how you can start building MCP-compliant tools today. Stay tuned!
