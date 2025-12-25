@@ -90,17 +90,6 @@ Located at `config/_default/params.toml`
 ### Menu Configuration
 Located at `config/_default/menus.en.toml`
 
-## Recent Fixes
-
-1. **Fixed Hugo server startup error**
-   - Issue: Template syntax error in `layouts/shortcodes/shell.html`
-   - Solution: Changed from shortcode syntax `{{< highlight shell >}}` to template function `{{ highlight .Inner "bash" }}`
-   - File: `layouts/shortcodes/shell.html:5`
-
-2. **Fixed malformed shortcode closing tag**
-   - Issue: Incorrect closing tag `{{ </shell>}}` instead of `{{< /shell >}}`
-   - File: `content/posts/mcp-series-01-problem/index.md:132`
-
 ## Theme Documentation
 
 Blowfish theme documentation: https://blowfish.page/
@@ -119,6 +108,13 @@ Key features used:
 If you encounter errors:
 1. Run `hugo server` to see line-specific error messages
 
+### UI Issues
+If UI elements don't render correctly:
+1. Run `hugo server --disableFastRender`
+2. Open Playwright using playwright MCP server tools and verify UI components
+3. Check browser console for errors
+4. Then based on your findinhgs, fix the relevant part of the codebase.
+
 
 ## Notes
 
@@ -126,3 +122,4 @@ If you encounter errors:
 - Custom shortcodes should go in `layouts/shortcodes/`
 - Custom CSS should go in `assets/css/`
 - Images should go in `assets/images/`
+- **Never** edit the `themes` directory directly.
