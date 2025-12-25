@@ -6,12 +6,11 @@ summary: "Understanding the technical specification of MCP: JSON-RPC message sch
 tags: ["MCP", "Protocol", "JSON-RPC", "Specs"]
 ---
 
-# Post 2 – Protocol Specification
+# Part 2 – Protocol Specification
 
 > **Note:** This is the second post in my series on the Model Context Protocol. 
-> * **Previous:** [Post 1: The Problem MCP Solves](https://blog.noobish.in/posts/mcp-series-01-problem/)
-> * **Next:** Post 3: High-Level Architecture (Coming Soon)
-
+> * **Previous:** [Part 1: The Problem MCP Solves](https://blog.noobish.in/posts/mcp-series-01-problem/)
+> * **Next:** Part 3: High-Level Architecture (Coming Soon)
 ---
 
 **TL;DR:**
@@ -74,6 +73,7 @@ Once initialized, interactions fall into standard methods grouped by capability.
 
 
 | Capability | Common Methods | Purpose |
+|------------|----------------|---------|
 | Tools | tools/list tools/call | Expose executable functions for actions or dynamic data. |
 | Resources | resources/list resources/read | Expose read-only data sources (files, DBs) via URIs. |
 | Prompts | prompts/list prompts/get | Provide standardized prompt templates to the host. |
@@ -110,7 +110,8 @@ Response:MCP results are wrapped in a content array. This allows for multi-modal
 
 ## 4. Transport Options
 | Transport | Description | Ideal Use Case |
-| STDIO | Host spawns the Server as a subprocess and pipes stdin/stdout. | | Local Tools. Connecting scripts to Claude Desktop or IDEs. | 
+|-----------|-------------|----------------|
+| STDIO | Host spawns the Server as a subprocess and pipes stdin/stdout. | Local Tools. Connecting scripts to Claude Desktop or IDEs. | 
 | SSE | HTTP endpoint for requests; SSE stream for server responses. | Remote Services. Cloud-hosted AI agents. | 
 
 ## 5. Security Considerations
@@ -121,9 +122,17 @@ A malicious user might try to trick the LLM into calling a tool with dangerous a
 ### 5.3 Transport Security
 For SSE, always use TLS (HTTPS) to prevent eavesdropping on sensitive context data as it travels over the network.Spec Timeline & Governance
 {{< timeline >}}
-  2024 – Initial release by Anthropic.
-  Today – Spec version 2024-11-05 is current. SDKs for Python, TypeScript, and Java are available.
-  Future – The spec is slated to move to the Linux Foundation for vendor-neutral stewardship.
-{{</timeline>}}
+  {{< timelineItem header="2024" >}}
+    Initial release by Anthropic.
+  {{< /timelineItem >}}
+
+  {{< timelineItem header="Today" >}}
+    Spec version 2024-11-05 is current. SDKs for Python, TypeScript, and Java are available.
+  {{< /timelineItem >}}
+
+  {{< timelineItem header="Future" >}}
+    The spec is slated to move to the Linux Foundation for vendor-neutral stewardship.
+  {{< /timelineItem >}}
+{{< /timeline >}}
 
 In the next post (Post 3), we’ll zoom out from the raw JSON and look at the high‑level architecture of an MCP-enabled application.

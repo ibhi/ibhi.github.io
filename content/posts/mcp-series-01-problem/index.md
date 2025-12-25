@@ -6,7 +6,7 @@ summary: "Overview of why context handling is problematic and how MCP addresses 
 tags: ["MCP", "GenAI", "Context Engineering"]
 ---
 
-# Post 1 – The Problem MCP Solves
+# Part 1 – The Problem MCP Solves
 
 **TL;DR:**
 AI applications struggle with fragmented context handling. MCP (Model Context Protocol) provides a standardized, secure way to transport rich context between models, tools, and users.
