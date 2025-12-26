@@ -3,8 +3,7 @@ title: "Part 4 – Building a Real-World MCP Server (The \"Crypto-Tracker\")"
 description: "Step-by-step guide to building a functional Crypto Tracker MCP Server using FastMCP. Connects to CoinGecko API and exposes tools, resources, and prompts."
 date: 2025-12-26
 summary: "Build a fully functional Crypto Tracker MCP Server with FastMCP that connects to real CoinGecko API data"
-tags: ["MCP", "FastMCP", "AI Agents", "Crypto"]
-feature_image: "feature_crypto_tracker.png"
+tags: ["MCP", "FastMCP", "AI Agents"]
 ---
 
 **TL;DR:** In this part, we stop talking theory and write code. We will build a fully functional Crypto Tracker MCP Server using FastMCP. It connects to the real CoinGecko API, exposes live market data as Resources, lets the AI fetch prices via Tools, and includes a "Financial Analyst" Prompt.
@@ -32,7 +31,7 @@ uv add "mcp[fastmcp]" httpx uvicorn
 
 ## 2. The Code (crypto_server.py)
 Create a file named crypto_server.py.
-```python
+```python { lineNos = true }
 from fastmcp import FastMCP, Context
 import httpx
 
@@ -127,6 +126,8 @@ mcp dev crypto_server.py
 ```
 *Action*: Click the get_crypto_price tool in the UI, type "bitcoin", and hit Run. You'll see the real live price
 
+{{< figure src="/images/mcp/mcp_inspector.png" alt="MCP Inspector UI" >}}
+
 Configure in Claude Desktop: Edit your claude_desktop_config.json:
 ```json
 {
@@ -151,24 +152,21 @@ FastMCP supports this natively. You don't need to change your code, just how you
 uvicorn crypto_server:mcp --port 8000
 ```
 2. How the Client Connects: An MCP Client (like a cloud agent) would now connect to:
-- SSE Endpoint: http://localhost:8000/sse (For receiving events)
-- Message Endpoint: http://localhost:8000/messages (For sending requests)
+- **SSE Endpoint**: http://localhost:8000/mcp (For receiving events)
+
 This is the exact same functionality, just transported over the web instead of a local pipe.
 
 ### 4. Seeing it in Action
-Once connected, you can ask your AI Agent (Claude):
+Once connected, you can ask your AI Agent (Eg: Claude):
 
-"Analyze my portfolio: bitcoin, solana, and peipei."
+`"Analyze my portfolio: bitcoin, solana, and peipei."`
 
 What happens under the hood?
 
-Prompt Loading: The AI loads your analyze_portfolio template.
-
-Tool Execution: It sees the instruction to fetch prices and automatically calls get_crypto_price("bitcoin"), get_crypto_price("solana"), etc.
-
-Resource Reading: It reads crypto://trending to check momentum.
-
-Final Answer: It combines the live data into a coherent financial summary.
+1. **Prompt Loading:** The AI loads your `analyze_portfolio` template.
+2. **Tool Execution:** It sees the instruction to fetch prices and automatically calls `get_crypto_price("bitcoin")`, `get_crypto_price("solana")`, etc.
+3. **Resource Reading:** It reads `crypto://trending` to check momentum.
+4. **Final Answer:** It combines the live data into a coherent financial summary.
 
 ## 5. Next Steps
 Congratulations! You have built a fully functional MCP server that connects to a real-world API, exposes Tools, Resources, and Prompts, and can run both locally and remotely.

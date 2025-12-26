@@ -19,7 +19,7 @@
 - **Length**: 1,200–1,800 words per post (excluding code snippets).
 - **Images**: Include at least one relevant diagram or illustration; Image placements and alt texts must be verified during publishing.
 - **Code Blocks**: Use markdown code fences with language identifier; include line numbers where useful using Hugo syntax
-- **Code Formatting**: Keep functions short; annotate with docstrings; comment on key steps.
+- **Code Formatting**: Keep functions short; annotate with docstrings; comment on key steps; Make sure line numbers are included for reference, specifically for longer code snippets.
 - **Diagrams**: Use Mermaid syntax wrapped in `{{< mermaid >}}` blocks;
 - **Shortcodes**: Wherever possible use Hugo Bluefish themes shortcodes and native Hugo shortcodes to enhance the reading experience.
 - **Spelling and grammar**: Ensure posts are free from spelling and grammar errors.
