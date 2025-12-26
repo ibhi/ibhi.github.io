@@ -146,4 +146,4 @@ graph TD
 {{< /mermaid >}}
 
 ## 6. What's Next?
-**Coming up**: Theory is great, but code is better. In the next post, we will write two servers: one using the "hard" way (Official SDK) and one using the "easy" way (FastMCP) that gets you running in 6 lines of code.
+**Coming up**: Theory is great, but code is better. In the next post, we’ll build a fully functional Crypto Tracker MCP Server using FastMCP, connecting to real-world APIs and exposing Live data.

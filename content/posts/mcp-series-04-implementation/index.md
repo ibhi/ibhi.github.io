@@ -1,6 +1,15 @@
-# Part 4 – Building a Real-World MCP Server (The "Crypto-Tracker")
+---
+title: "Part 4 – Building a Real-World MCP Server (The \"Crypto-Tracker\")"
+description: "Step-by-step guide to building a functional Crypto Tracker MCP Server using FastMCP. Connects to CoinGecko API and exposes tools, resources, and prompts."
+date: 2025-12-26
+summary: "Build a fully functional Crypto Tracker MCP Server with FastMCP that connects to real CoinGecko API data"
+tags: ["MCP", "FastMCP", "AI Agents", "Crypto"]
+feature_image: "feature_crypto_tracker.png"
+---
 
 **TL;DR:** In this part, we stop talking theory and write code. We will build a fully functional Crypto Tracker MCP Server using FastMCP. It connects to the real CoinGecko API, exposes live market data as Resources, lets the AI fetch prices via Tools, and includes a "Financial Analyst" Prompt.
+
+This post is part of a MCP series. If you haven't read Part 3 yet, [start there]({{< ref "/posts/mcp-series-03-architecture" >}}) to understand the architecture.
 
 ## 1. The Setup
 We are using fastmcp because it handles the heavy lifting (JSON-RPC handshake, error handling, typing).
@@ -10,14 +19,16 @@ Prerequisites:
 - Install FastMCP and dependencies
 {{< tabs >}}
     {{< tab label="pip" >}}
-        ```bash
-        pip install "mcp[fastmcp]" httpx uvicorn
+```bash
+pip install "mcp[fastmcp]" httpx uvicorn
+```
     {{< /tab >}}
     {{< tab label="uv" >}}
-        ```bash
-        uv add "mcp[fastmcp]" httpx uvicorn
+```bash
+uv add "mcp[fastmcp]" httpx uvicorn
+```
     {{< /tab >}}
-{{</ tabs >}}
+{{< /tabs >}}
 
 ## 2. The Code (crypto_server.py)
 Create a file named crypto_server.py.
@@ -110,7 +121,8 @@ This is how you connect the server to Claude Desktop or Cursor. The host applica
 
 Run in Terminal (to test):
 
-```bash # This starts the server in "Inspector" mode (a web UI for debugging)
+```bash
+# This starts the server in "Inspector" mode (a web UI for debugging)
 mcp dev crypto_server.py
 ```
 *Action*: Click the get_crypto_price tool in the UI, type "bitcoin", and hit Run. You'll see the real live price
@@ -159,7 +171,9 @@ Resource Reading: It reads crypto://trending to check momentum.
 Final Answer: It combines the live data into a coherent financial summary.
 
 ## 5. Next Steps
-Congratulations! You have built a fully functional MCP server that connects to a real-world API, exposes Tools, Resources, and Prompts, and can run both locally and remotely. In the final post of this series, we will secure our server using Authentication and look at the future of Agentic Workflows.
+Congratulations! You have built a fully functional MCP server that connects to a real-world API, exposes Tools, Resources, and Prompts, and can run both locally and remotely.
+
+**Ready to secure your MCP server?** In the final post of this series, we'll discuss some of security challenges and best practices.
 
 ## 6. References
 - [Build a MCP server](https://modelcontextprotocol.io/docs/develop/build-server)
