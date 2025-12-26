@@ -1,7 +1,7 @@
 ---
 title: "Part 3 – Architecture & Core Components"
 description: "MCP isn't just a pipe; it's a specific architectural pattern consisting of Hosts, Clients, and Servers. This post unpacks the 'Sandwich Architecture' that allows AI agents to safely connect to local and remote resources."
-date: 2025-12-25
+date: 2025-12-26
 summary: "Understanding the MCP 'Sandwich Architecture' with Hosts, Clients, and Servers, plus transport mechanisms and data flow"
 tags: ["MCP", "GenAI", "AI Agents", "Integration"]
 feature_image: "feature_mcp_protocol.png"
@@ -27,32 +27,89 @@ graph TD
     end
 
     H --"Controls"--> C
-    C --"Transport (Stdio/SSE)"--> S
+    C --"Transport Layer"--> S
     S --"Queries"--> D
 {{< /mermaid >}}
 
-## 2. The Three Pillars
-**The Host:** The container application (like Claude Desktop, Cursor, or your custom AI app). It manages the lifecycle of the connection and decides how to present tools to the user. It is the "User Agent" of the MCP world.
+## 2. Participants: The Three Pillars
+**The Host:** The container application (like Claude Desktop, Cursor, or your custom AI app) that coordinates and manages one or multiple MCP clients. The host serves as the "conversation controller," managing the model's context window, enforcing security policies, and coordinating context aggregation across multiple servers.
 
-**The Client:** The protocol implementation that lives inside the Host. It handles the JSON-RPC handshake, capabilities negotiation, and message routing. It maintains a 1:1 stateful session with a server.
+**The Client:** The protocol implementation that lives inside the host, that maintains a connection to an MCP server and obtains context from an MCP server for the MCP host to use. Its role is to handle protocol negotiation, manage the session, and route JSON-RPC messages bidirectionally between the host and the server.
 
-**The Server:** The bridge to your data. It exposes three primary primitives:
+**The Server:** A standalone program (local process or remote service) that provides specialized context and functionality. Servers expose their capabilities through primitives such as Tools, Resources, and Prompts and are intentionally kept simple to minimize implementation overhead.
 
-- **Resources:** Read-only data (like files or logs).
+{{< mermaid >}}
+graph TB
+    subgraph "MCP Host (AI Application)"
+        Client1["MCP Client 1"]
+        Client2["MCP Client 2"]
+        Client3["MCP Client 3"]
+        Client4["MCP Client 4"]
+    end
 
-- **Tools:** Executable functions (like "create_jira_ticket").
+    ServerA["MCP Server A - Local<br/>(e.g. Filesystem)"]
+    ServerB["MCP Server B - Local<br/>(e.g. Database)"]
+    ServerC["MCP Server C - Remote<br/>(e.g. Sentry)"]
 
-- **Prompts:** Pre-written templates to guide the LLM.
+    Client1 ---|"Dedicated<br/>connection"| ServerA
+    Client2 ---|"Dedicated<br/>connection"| ServerB
+    Client3 ---|"Dedicated<br/>connection"| ServerC
+    Client4 ---|"Dedicated<br/>connection"| ServerC
+{{< /mermaid >}}
 
-## 3. Transports: The Nervous System
+## 3. Layers
+MCP consists of two layers:
+- **Transport layer:** Defines the communication mechanisms and channels that enable data exchange between clients and servers, including transport-specific connection establishment, message framing, and authorization.
+- **Data layer:** Defines the JSON-RPC based protocol for client-server communication, including lifecycle management, and core primitives, such as tools, resources, prompts and notifications.
+
+### 3.1 Transport Layer: The Nervous System
 MCP defines how these components talk. Currently, there are two official standard transports:
 
 | Transport | Best For         | Mechanism                                                                                          |
 |-----------|------------------|--------------------------------------------------------------------------------------------------|
 | Stdio     | Local Integration| The Host spawns the Server as a subprocess. Communication happens over standard input/output pipes. Fast, secure by default (local only), and easy to debug. |
-| SSE (Server-Sent Events) | Remote/Cloud     | Uses HTTP Post for client-to-server messages and an SSE stream for server-to-client updates. Essential for "Remote MCP" where the agent and the tool are on different machines. |
+| Streamable HTTP Transport | Remote/Cloud     | Uses HTTP Post for client-to-server messages and an SSE stream for server-to-client updates. Essential for "Remote MCP" where the agent and the tool are on different machines. |
+### 3.2 Data Layer: The Language
+The data layer implements a JSON-RPC 2.0 based exchange protocol that defines the message structure and semantics. This layer includes:
+- **Lifecycle management:** Handles connection initialization, capability negotiation, and connection termination between clients and servers
+- **Server features:** Enables servers to provide core functionality including tools for AI actions, resources for context data, and prompts for interaction templates from and to the client
+- **Client features:** Enables servers to ask the client to sample from the host LLM, elicit input from the user, and log messages to the client
+- **Utility features:** Supports additional capabilities like notifications for real-time updates and progress tracking for long-running operations
 
-## 4. The Data Flow
+## 4. Data Layer: Protocol in Action
+A core part of MCP is defining the schema and semantics between MCP clients and MCP servers. Developers will likely find the **data layer** — in particular, the set of **primitives** — to be the most interesting part of MCP. It is the part of MCP that defines the ways developers can share context from MCP servers to MCP clients.
+
+### 4.1 Lifecycle: The Connection Dance
+The interaction between client and server begins with a handshake sequence. During the `initialize` phase, both parties explicitly declare their capabilities, such as whether the server supports resource subscriptions or if the client supports sampling.
+
+### 4.2 Server Primitives: The Power Trio
+Once the session is "Ready", the server provides context via three core Server Primitives:
+- **Resources:** "Read-only" context objects (like files or DB records).
+- **Tools:** Executable functions with side effects (like "create-ticket").
+- **Prompts:** Reusable templates for model interactions.
+
+### 4.3 Client Primitives: Empowering the Server
+Additionally, servers can use Client-Side Primitives to ask the host for help:
+- **Sampling:** Asking the host's LLM to complete a prompt (recursive inference).
+- **Elicitation:** Asking the user for additional information or confirmation.
+
+{{< mermaid >}}
+sequenceDiagram
+    participant Host
+    participant Client
+    participant Server
+    Host->>Client: Create Client for Server
+    Client->>Server: initialize (capabilities, version)
+    Server-->>Client: initializeResult (server capabilities)
+    Client->>Server: notifications/initialized
+    Note over Client,Server: Stateful Connection Active
+    Host->>Client: call_tool("sum", {a:5, b:7})
+    Client->>Server: JSON-RPC request
+    Server-->>Client: JSON-RPC response {result: 12}
+    Client-->>Host: Tool Result
+{{< /mermaid >}}
+
+## 5. The Data Flow: A User Request Example
 When a user asks, *"What's the weather in Tokyo?"*, the flow is specific:
 
 1. **Discovery**: The Client calls `tools/list` on the Server.
@@ -88,5 +145,5 @@ graph TD
       H -->|10. LLM generates final answer| LLM
 {{< /mermaid >}}
 
-## 5. What's Next?
+## 6. What's Next?
 **Coming up**: Theory is great, but code is better. In the next post, we will write two servers: one using the "hard" way (Official SDK) and one using the "easy" way (FastMCP) that gets you running in 6 lines of code.

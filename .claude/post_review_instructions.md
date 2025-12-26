@@ -3,6 +3,7 @@
 - Clear, concise, and engaging.
 - Use first-person sparingly; focus on informative narrative.
 - Maintain technical accuracy; cite sources where appropriate.
+- Consistent terminology (e.g., always refer to "MCP Server" rather than alternating with "backend").
 
 ## Structure & SEO
 1. **title**: Concise, keyword-rich, and includes the main topic.
