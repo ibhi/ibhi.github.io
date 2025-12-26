@@ -3,7 +3,7 @@ title: "Part 3 – Architecture & Core Components"
 description: "MCP isn't just a pipe; it's a specific architectural pattern consisting of Hosts, Clients, and Servers. This post unpacks the 'Sandwich Architecture' that allows AI agents to safely connect to local and remote resources."
 date: 2025-12-26
 summary: "Understanding the MCP 'Sandwich Architecture' with Hosts, Clients, and Servers, plus transport mechanisms and data flow"
-tags: ["MCP", "GenAI", "AI Agents", "Integration"]
+tags: ["MCP", "GenAI", "AI Agents"]
 feature_image: "feature_mcp_protocol.png"
 ---
 
