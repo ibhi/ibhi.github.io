@@ -7,10 +7,9 @@ tags: ["MCP", "GenAI", "AI Agents", "Integration"]
 feature_image: "feature_mcp_protocol.png"
 ---
 
-## TL;DR:
-MCP isn't just a pipe; it's a specific architectural pattern consisting of Hosts, Clients, and Servers. This post unpacks the "Sandwich Architecture" that allows AI agents to safely connect to local and remote resources.
+**TL;DR:** MCP isn't just a pipe; it's a specific architectural pattern consisting of Hosts, Clients, and Servers. This post unpacks the "Sandwich Architecture" that allows AI agents to safely connect to local and remote resources.
 
-If you haven't read Part 2 yet, [start there]({{< ref "/posts/mcp-series-02-the-spec" >}}) to understand the protocol specification.
+This post is part of a MCP series. If you haven't read Part 2 yet, [start there]({{< ref "/posts/mcp-series-02-the-spec" >}}) to understand the protocol specification.
 
 ## 1. The "Sandwich" Architecture
 At a high level, MCP follows a client-host-server model, often described as a "sandwich" where the Host controls the Client, which connects to the Server.
@@ -90,4 +89,4 @@ graph TD
 {{< /mermaid >}}
 
 ## 5. What's Next?
-**Coming Up Next**: Theory is great, but code is better. In the next post, we will write two servers: one using the "hard" way (Official SDK) and one using the "easy" way (FastMCP) that gets you running in 6 lines of code.
+**Coming up**: Theory is great, but code is better. In the next post, we will write two servers: one using the "hard" way (Official SDK) and one using the "easy" way (FastMCP) that gets you running in 6 lines of code.
