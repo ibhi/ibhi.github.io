@@ -8,10 +8,10 @@
 ## Structure & SEO
 1. **title**: Concise, keyword-rich, and includes the main topic.
 2. **description**: 150‑160 characters, includes primary keyword.
-3. **tags**: Up to 3 relevant tags.
+3. **tags**: Up to 3 relevant tags. Reuse existing tags where possible.
 4. **summary**: 1‑3 sentence hook that appears in RSS feeds and search snippets.
 5. All the above as yaml frontmatter
-6. **TL;DR Section**: One short paragraph summarizing the key takeaway.
+6. **TL;DR Section**: One short paragraph summarizing the key takeaway at the beginning.
 7. **Headers**: Use H1, H2, H3 hierarchy; include keywords where natural.
 8. **Call‑to‑Action (CTA)** or **Next Steps** or **Recap**: Encourage comments, subscription, or exploration of related posts.
 

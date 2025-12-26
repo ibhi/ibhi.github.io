@@ -1,9 +1,9 @@
 ---
 title: "Part 2 – The Secret Language - Decoding the MCP Specification"
-description: "If the Model Context Protocol (MCP) is the 'USB-C for AI', the MCP Specification is the electrical blueprint that makes the connection possible. While architectural overviews give us the 'what', the specification provides the authoritative 'how'. This post breaks down the technical core of MCP."
+description: "MCP Specification: The electrical blueprint behind the 'USB-C for AI'. This post details MCP's technical core, covering its message formats, lifecycle, and primitives."
 date: 2025-12-25
 summary: "A deep dive into the MCP protocol specification, including message formats, lifecycle, and core primitives"
-tags: ["MCP", "GenAI", "AI Agents", "Integration"]
+tags: ["MCP", "GenAI", "AI Agents"]
 ---
 
 **TL;DR:** If the Model Context Protocol (MCP) is the "USB-C for AI" the MCP Specification is the electrical blueprint that makes the connection possible. While architectural overviews give us the "what" the specification provides the authoritative "how".
@@ -31,7 +31,7 @@ The AI (Host) asks the Server to do something.
 ```
 Response:
 The Server replies. Note the content array—MCP is multi-modal by design (text, images, binaries).
-```json 
+```json
 {
   "jsonrpc": "2.0",
   "id": 1,
@@ -86,7 +86,7 @@ The core of an MCP server's utility lies in three primitives that provide contex
 | Tools     | POST         | Executable functions with side effects. Defined by JSON Schema 2020-12 for parameter validation. |
 | Prompts   | Template     | Reusable instruction sets (e.g., "Review this code") that standardize model behavior. |
 
-Notes: 
+Notes:
 - **Structured Tool Output:** Tools now support [Structured Tool Output](https://modelcontextprotocol.io/specification/2025-06-18/server/tools#structured-content), allowing them to return machine-parseable JSON instead of just raw text.
 - ***Security:*** Tools are the dangerous part. The spec requires that tools be distinct from resources so *Hosts* can enforce "Human-in-the-loop" approval for sensitive actions.
 
@@ -105,7 +105,7 @@ MCP follows OAuth 2.1 conventions to protect sensitive data.
 
 Notes:
 - The specification doesn't mandate OAuth flow for local Stdio servers, instead retrieve credentials from the environment.
-- Since Authorization is an evloving area, always refer to the latest spec for updates. At the time of writing [2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization) is the latest.
+- Since Authorization is an evolving area, always refer to the latest spec for updates. At the time of writing [2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization) is the latest.
 
 ## 7. The Future Spec: Year Two Infrastructure
 The latest spec revision (2025-11-25) moved MCP from a developer tool to production infrastructure.
