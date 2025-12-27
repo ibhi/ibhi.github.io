@@ -17,7 +17,10 @@
 
 ## Content Requirements
 - **Length**: 1,200–1,800 words per post (excluding code snippets).
-- **Images**: Include at least one relevant diagram or illustration; Image placements and alt texts must be verified during publishing.
+- **Images**:
+    - Include at least one relevant diagram or illustration; 
+    - Image placements and alt texts must be verified during publishing. 
+    - Images must include alt text.
 - **Code Blocks**: Use markdown code fences with language identifier; include line numbers where useful using Hugo syntax
 - **Code Formatting**: Keep functions short; annotate with docstrings; comment on key steps; Make sure line numbers are included for reference, specifically for longer code snippets.
 - **Diagrams**: Use Mermaid syntax wrapped in `{{< mermaid >}}` blocks;

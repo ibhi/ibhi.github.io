@@ -36,7 +36,17 @@ enableEmoji = true
   priority = 0.5
 
 [outputs]
-  home = ["HTML", "RSS", "JSON"]
+  page = ["html", "md"]
+  home = ["html", "md", "RSS", "JSON"]
+
+[outputFormats]
+  [outputFormats.Markdown]
+    name = "md"
+    baseName = "index"
+    isPlainText = true
+    mediaType = "text/markdown"
+    rel = "alternate"
+    path = "md"
 
 [related]
   threshold = 0
