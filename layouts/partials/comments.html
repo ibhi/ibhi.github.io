@@ -1,0 +1,62 @@
+{{ with site.Params.giscus }}
+  {{ if .repo }}
+    <script src="https://giscus.app/client.js"
+      data-repo="{{ .repo }}"
+      data-repo-id="{{ .repoId }}"
+      data-category="{{ .category }}"
+      data-category-id="{{ .categoryId }}"
+      data-mapping="{{ .mapping | default "pathname" }}"
+      data-strict="{{ .strict | default "0" }}"
+      data-reactions-enabled="{{ .reactionsEnabled | default "1" }}"
+      data-emit-metadata="{{ .emitMetadata | default "0" }}"
+      data-input-position="{{ .inputPosition | default "bottom" }}"
+      data-theme="{{ .theme | default "preferred_color_scheme" }}"
+      data-lang="{{ .lang | default "en" }}"
+      crossorigin="anonymous"
+      async>
+    </script>
+
+    <!-- Theme synchronization script -->
+    <script>
+      // Update Giscus theme when appearance switcher is clicked
+      function updateGiscusTheme() {
+        const isDark = document.documentElement.classList.contains('dark');
+        const giscusFrame = document.querySelector('iframe.giscus-frame');
+
+        if (giscusFrame) {
+          const theme = isDark ? 'dark' : 'light';
+          giscusFrame.contentWindow.postMessage({
+            giscus: {
+              setConfig: {
+                theme: theme
+              }
+            }
+          }, 'https://giscus.app');
+        }
+      }
+
+      // Create an observer to watch for theme changes on the <html> element
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            updateGiscusTheme();
+          }
+        });
+      });
+
+      // Start observing the <html> tag
+      observer.observe(document.documentElement, { attributes: true });
+
+      // Also try to set it correctly on initial load
+      window.addEventListener('message', (event) => {
+        if (event.origin !== 'https://giscus.app') return;
+        if (!(typeof event.data === 'object' && event.data.giscus)) return;
+        updateGiscusTheme();
+      });
+    </script>
+  {{ else }}
+    <p class="text-center text-neutral-500 dark:text-neutral-400">
+      Comments are disabled. Configure Giscus in params.toml to enable.
+    </p>
+  {{ end }}
+{{ end }}

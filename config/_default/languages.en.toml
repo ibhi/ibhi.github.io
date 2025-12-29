@@ -11,7 +11,7 @@ title = "Limited only by your imagination"
   dateFormat = "2 January 2006"
   logo = "images/noobish_logo.png"
   # secondaryLogo = "img/secondary-logo.png"
-  # description = "My awesome website"
+  description = "I am an experienced **Software Solution Architect** with a passion for using technology to solve the practical, day-to-day problems we face. This site serves as my **Digital Garden**—a living collection of notes, architectural patterns, and experiments that evolve over time. While these pages document my own learning journey, my hope is that they also help you solve similar challenges in your own projects."
   copyright = "Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)"
 
 [params.author]

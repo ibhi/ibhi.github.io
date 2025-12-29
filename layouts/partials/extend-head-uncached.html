@@ -1,0 +1,44 @@
+<!-- Canonical URL -->
+<link rel="canonical" href="{{ .Permalink }}">
+
+{{- with .Description | default .Site.Params.Description }}
+<meta name="description" content="{{ . }}">
+{{- end }}
+
+<!-- Open Graph / Facebook -->
+{{- if .IsHome }}
+<meta property="og:type" content="website">
+{{- else }}
+<meta property="og:type" content="article">
+{{- end }}
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:title" content="{{ .Title }}">
+{{- with .Description | default .Site.Params.Description }}
+<meta property="og:description" content="{{ . }}">
+{{- end }}
+{{- with .Params.images }}
+{{- range first 1 . }}
+<meta property="og:image" content="{{ . | absURL }}">
+{{- end }}
+{{- else }}
+{{- with .Site.Params.defaultSocialImage }}
+<meta property="og:image" content="{{ . | absURL }}">
+{{- end }}
+{{- end }}
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="{{ .Permalink }}">
+<meta name="twitter:title" content="{{ .Title }}">
+{{- with .Description | default .Site.Params.Description }}
+<meta name="twitter:description" content="{{ . }}">
+{{- end }}
+{{- with .Params.images }}
+{{- range first 1 . }}
+<meta name="twitter:image" content="{{ . | absURL }}">
+{{- end }}
+{{- else }}
+{{- with .Site.Params.defaultSocialImage }}
+<meta name="twitter:image" content="{{ . | absURL }}">
+{{- end }}
+{{- end }}

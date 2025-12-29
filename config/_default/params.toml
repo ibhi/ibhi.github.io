@@ -91,8 +91,23 @@ forgejoDefaultServer = "https://v11.next.forgejo.org"
   showCategoryOnly = false # use showTaxonomies OR showCategoryOnly, not both
   showAuthorsBadges = false
   showWordCount = true
-  # sharingLinks = [ "linkedin", "twitter", "bluesky", "mastodon", "reddit", "pinterest", "facebook", "email", "whatsapp", "telegram", "line"]
+  sharingLinks = ["linkedin", "twitter", "reddit", "pinterest", "facebook", "email", "whatsapp", "telegram"]
   showZenMode = true
+  showComments = true
+
+[giscus]
+  repo = "ibhi/ibhi.github.io"      # Replace with your repo
+  repoId = "R_kgDOQt3QPA"                  # From giscus.app
+  category = "Announcements"                   # Discussion category
+  categoryId = "DIC_kwDOQt3QPM4C0SsI"             # From giscus.app
+  mapping = "url"                   # Map discussions to page paths
+  strict = "0"                           # 0 = loose matching
+  reactionsEnabled = "1"                 # Enable reactions
+  emitMetadata = "0"                     # Don't emit metadata
+  inputPosition = "bottom"               # Comment input position
+  theme = "preferred_color_scheme"       # Auto light/dark theme
+  lang = "en"                            # Language
+  crossorigin = "anonymous"
 
 [list]
   showHero = false
@@ -179,3 +194,6 @@ forgejoDefaultServer = "https://v11.next.forgejo.org"
 
 [advertisement]
   # adsense = ""
+
+# SEO Configuration
+structuredData = true
