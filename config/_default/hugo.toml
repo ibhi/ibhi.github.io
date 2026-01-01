@@ -6,6 +6,9 @@ theme = "blowfish" # UNCOMMENT THIS LINE
 # baseURL = "https://your_domain.com/"
 defaultContentLanguage = "en"
 
+# Module mounts for staging directory
+
+
 # pluralizeListTitles = "true" # hugo function useful for non-english languages, find out more in  https://gohugo.io/getting-started/configuration/#pluralizelisttitles
 
 enableRobotsTXT = true
@@ -17,6 +20,14 @@ buildFuture = false
 enableEmoji = true
 
 # googleAnalytics = "G-XXXXXXXXX"
+
+[module]
+  [[module.mounts]]
+    source = '../Sync/Notes/.hugo-staging'
+    target = 'content/posts'
+  [[module.mounts]]
+    source = 'assets/images'
+    target = 'assets/images'
 
 [pagination]
   pagerSize = 100
