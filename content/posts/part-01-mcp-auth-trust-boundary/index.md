@@ -1,10 +1,20 @@
-+++
-title = "Part 1 - You're Doing MCP Auth Wrong: The Two Trust Boundaries That Matter"
-description = "MCP's 'UPnP for AI' vision creates unique security challenges. Learn the two trust boundaries that matter, who talks to whom, and why clear boundaries are essential."
-date = "2026-01-03"
-summary = "MCP aims to be 'UPnP for AI'—any client connecting to any server without prior coordination. This creates unique security challenges that traditional OAuth patterns weren't designed for. In this post, we map the trust model: four actors, two critical trust boundaries, and why the autonomous agent nature of MCP changes everything."
-tags = ["MCP", "Security", "OAuth"]
-+++
+---
+title: 'Part 1 - You''re Doing MCP Auth Wrong: The Two Trust Boundaries That Matter'
+description: MCP's 'UPnP for AI' vision creates unique security challenges. Learn the two trust boundaries that matter, who talks to whom, and why clear boundaries are essential.
+tags:
+  - MCP
+  - Security
+  - OAuth
+summary: 'MCP aims to be ''UPnP for AI''—any client connecting to any server without prior coordination. This creates unique security challenges that traditional OAuth patterns weren''t designed for. In this post, we map the trust model: four actors, two critical trust boundaries, and why the autonomous agent nature of MCP changes everything.'
+draft: false
+status: published
+published_date: 2026-01-03T00:00:00.000Z
+external_url: https://blog.noobish.in/posts/part-01-mcp-auth-trust-boundary
+series:
+  - 'MCP Security Series'
+series_order: 1
+date: '2026-01-03'
+---
 
 
 ## TL;DR
@@ -15,7 +25,6 @@ tags = ["MCP", "Security", "OAuth"]
 - MCP's **autonomous agent model** (the Host reasons about which tools to call) creates prompt injection risks beyond traditional APIs
 - **Clear trust boundaries** are the foundation—without them, your server can't distinguish legitimate requests from imposters
 
----
 
 ## 1. Introduction: The Universal Connector
 
