@@ -4,6 +4,8 @@ description: "MCP Specification: The electrical blueprint behind the 'USB-C for 
 date: 2025-12-25
 summary: "A deep dive into the MCP protocol specification, including message formats, lifecycle, and core primitives"
 tags: ["MCP", "GenAI", "AI Agents"]
+series: ["MCP Introduction Series"]
+series_order: 2
 ---
 
 **TL;DR:** If the Model Context Protocol (MCP) is the "USB-C for AI" the MCP Specification is the electrical blueprint that makes the connection possible. While architectural overviews give us the "what" the specification provides the authoritative "how".

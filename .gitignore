@@ -5,6 +5,9 @@
 /hugo_stats.json
 /.hugo_build.lock
 
+##### Staging directory (live preview)
+.hugo-staging/
+
 ##### Node/Tailwind/PostCSS (if used by theme)
 node_modules/
 **/node_modules/

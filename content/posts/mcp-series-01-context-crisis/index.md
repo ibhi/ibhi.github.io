@@ -4,6 +4,8 @@ description: "Building AI agents today feels like writing printer drivers in the
 date: 2025-12-25
 summary: "Understanding the N×M problem in AI application development and how MCP provides a USB-C-like solution"
 tags: ["MCP", "GenAI", "AI Agents"]
+series: ["MCP Introduction Series"]
+series_order: 1
 ---
 
 **TL;DR:** Building AI agents today feels like writing printer drivers in the 90s. We face an `N × M` integration problem where every AI app needs a custom connector for every data source. MCP (Model Context Protocol) solves this by acting as a universal open standard—effectively the USB-C for AI applications.

@@ -23,11 +23,17 @@ enableEmoji = true
 
 [module]
   [[module.mounts]]
-    source = '../Sync/Notes/.hugo-staging'
-    target = 'content/posts'
+    source = '.hugo-staging'
+    target = 'content/drafts'
   [[module.mounts]]
     source = 'assets/images'
     target = 'assets/images'
+  [[module.mounts]]
+    source = 'content/posts'
+    target = 'content/posts'
+  [[module.mounts]]
+    source = 'content/about'
+    target = 'content/about'
 
 [pagination]
   pagerSize = 100

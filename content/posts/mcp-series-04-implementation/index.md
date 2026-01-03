@@ -4,6 +4,8 @@ description: "Step-by-step guide to building a functional Crypto Tracker MCP Ser
 date: 2025-12-26
 summary: "Build a fully functional Crypto Tracker MCP Server with FastMCP that connects to real CoinGecko API data"
 tags: ["MCP", "FastMCP", "AI Agents"]
+series: ["MCP Introduction Series"]
+series_order: 4
 ---
 
 **TL;DR:** In this part, we stop talking theory and write code. We will build a fully functional Crypto Tracker MCP Server using FastMCP. It connects to the real CoinGecko API, exposes live market data as Resources, lets the AI fetch prices via Tools, and includes a "Financial Analyst" Prompt.
