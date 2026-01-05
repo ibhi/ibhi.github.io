@@ -1,5 +1,5 @@
 ---
-title: 'Part 1 - You''re Doing MCP Auth Wrong: The Two Trust Boundaries That Matter'
+title: 'MCP Security Part 1 - You''re Doing MCP Auth Wrong: The Two Trust Boundaries That Matter'
 description: MCP's 'UPnP for AI' vision creates unique security challenges. Learn the two trust boundaries that matter, who talks to whom, and why clear boundaries are essential.
 tags:
   - MCP

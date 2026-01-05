@@ -1,5 +1,5 @@
 ---
-title: "Part 2 – The Secret Language - Decoding the MCP Specification"
+title: "MCP Introduction Part 2 – The Secret Language - Decoding the MCP Specification"
 description: "MCP Specification: The electrical blueprint behind the 'USB-C for AI'. This post details MCP's technical core, covering its message formats, lifecycle, and primitives."
 date: 2025-12-25
 summary: "A deep dive into the MCP protocol specification, including message formats, lifecycle, and core primitives"

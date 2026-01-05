@@ -1,7 +1,7 @@
 ---
-title: "Part 4 – Building a Real-World MCP Server (The \"Crypto-Tracker\")"
+title: "MCP Introduction Part 4 – Building a Real-World MCP Server (The \"Crypto-Tracker\")"
 description: "Step-by-step guide to building a functional Crypto Tracker MCP Server using FastMCP. Connects to CoinGecko API and exposes tools, resources, and prompts."
-date: 2025-12-26
+date: 2025-12-27
 summary: "Build a fully functional Crypto Tracker MCP Server with FastMCP that connects to real CoinGecko API data"
 tags: ["MCP", "FastMCP", "AI Agents"]
 series: ["MCP Introduction Series"]
