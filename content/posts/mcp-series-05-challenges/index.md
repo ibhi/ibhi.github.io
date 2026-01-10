@@ -372,7 +372,7 @@ I'm writing an entire series on [MCP security](posts/part-01-mcp-auth-trust-boun
 [^8]: [6 challenges of using the Model Context Protocol (MCP)](https://www.merge.dev/blog/mcp-challenges)
 [^9]: [MCP Security Series - Part 1: Trust Boundaries](https://blog.noobish.in/posts/part-01-mcp-auth-trust-boundary)
 [^10]: [Introducing MCP CLI: A way to call MCP Servers Efficiently](https://www.philschmid.de/mcp-cli)
-[^11]: [What Is an MCP Gateway? Why Enterprises Are Adopting a Control Plane for MCP](https://www.konghq.com/blog/mcp-gateway-enterprises)
+[^11]: [What Is an MCP Gateway? Why Enterprises Are Adopting a Control Plane for MCP](https://obot.ai/blog/what-is-an-mcp-gateway/)
 [^12]: [Secure Your AI Agents: A Deep Dive into Azure's MCP Gateway with Entra ID](https://learn.microsoft.com/azure/application-gateway/mcp-gateway-entra-integration)
 [^13]: [Code execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp)
 [^14]: [Cloudflare's Code Mode](https://blog.cloudflare.com/code-mode/)
