@@ -11,7 +11,11 @@ tags:
 series:
   - MCP Introduction Series
 series_order: 5
+status: published
+published_date: '2026-01-10'
+external_url: http://127.0.0.1:1313/posts/mcp-series-05-challenges
 ---
+
 
 
 This post is part of a series. If you haven't read [Part 4]({{< ref "/posts/mcp-series-04-implementation" >}}) yet, start there to understand how we built a real-world MCP server.
@@ -65,7 +69,7 @@ Multiply this across multiple servers—GitHub (90 tools), database (20 tools), 
 - **Defer loading**: Tools aren't loaded until the host determines they're relevant based on conversation context[^3]
 - **Dynamic discovery**: CLI tools like [mcp-cli](https://github.com/philschmid/mcp-cli) enable just-in-time tool schema inspection, reducing token usage by ~99% (47K → 400 tokens in tested scenarios)[^10]
 - **Skills over MCP servers**: Create [Skills](https://agentskills.io/home) for CLI alternatives—GitHub CLI via Skill loads only commands you invoke, not all 90+ tools
-- **Code execution**: Execute code to call the MCP server and pass only the final result back to LLM
+- **Code execution**: Execute code to call the MCP server and pass only the final result back to LLM[^13][^14]
 
 **Latency Reduction**:
 
@@ -106,34 +110,32 @@ The **autonomous agent model**—where the Host decides which tools to call base
 - **Supply Chain Risks**: Misconfigured public servers, dynamic tool modification without awareness
 - **Data Leakage**: Overly permissive servers leak data across sessions without proper user isolation
 {{< mermaid >}}
-graph LR
+graph TD
     subgraph "Trust Zone: Local/Trusted"
-        User((User)) -- "Untrusted Input" --> Host[Host / App]
-        Host -- "Control" --> Client[MCP Client]
+        User((User)) -->|"Untrusted Input"| Host[Host / App]
+        Host -->|"Control"| Client[MCP Client]
     end
 
     subgraph "Trust Boundary 1: Transport"
-        direction TB
         B1{{Auth / TLS}}
     end
 
-    Client -.-> B1 -.-> Server
+    Client -.-> B1
+    B1 -.-> Server
 
     subgraph "Trust Zone: MCP Server"
         Server[MCP Server]
     end
 
     subgraph "Trust Boundary 2: Resource Auth"
-        direction TB
         B2{{API Keys / Scopes}}
     end
 
-    Server -.-> B2 -.-> Res[External Resources / APIs]
+    Server -.-> B2
+    B2 -.-> Res[External Resources / APIs]
 
-    style B1 fill:#f96,stroke:#333,stroke-dasharray: 5 5
-    style B2 fill:#f96,stroke:#333,stroke-dasharray: 5 5
-    style User fill:#dfd
-    style Res fill:#ddf
+    linkStyle 5 stroke-dasharray: 5 5
+    linkStyle 7 stroke-dasharray: 5 5
 {{< /mermaid >}}
 ### Threat → Defense Strategy
 
@@ -303,7 +305,7 @@ When building MCP servers, design for agents, not humans:
 ---
 ## 6. Enterprise Path: MCP Gateway
 
-If these challenges feel overwhelming for production deployment, you're not alone. Enterprises are adopting **MCP Gateways**—control planes that sit between AI agents and MCP servers, providing the security, state management, and governance that the protocol lacks.
+If these challenges feel overwhelming for production deployment, you're not alone. Enterprises are adopting **MCP Gateways**[^11][^12]—control planes that sit between AI agents and MCP servers, providing the security, state management, and governance that the protocol lacks.
 
 **What MCP Gateways Solve:**
 
@@ -347,7 +349,7 @@ We've covered **5 core challenges** of MCP:
 
 Before implementing MCP in production, you need to understand the security implications deeply. Prompt injection, confused deputy attacks, supply chain risks—these aren't theoretical. They're happening today.
 
-I'm writing an entire series on [MCP security](posts/part-01-mcp-auth-trust-boundary/)—a comprehensive deep dive into:
+I'm writing an entire series on [MCP security](posts/part-01-mcp-auth-trust-boundary/)[^9]—a comprehensive deep dive into:
 
 - Trust boundaries and the four actor model
 - Authentication vs authorization in MCP
@@ -373,6 +375,8 @@ I'm writing an entire series on [MCP security](posts/part-01-mcp-auth-trust-boun
 [^10]: [Introducing MCP CLI: A way to call MCP Servers Efficiently](https://www.philschmid.de/mcp-cli)
 [^11]: [What Is an MCP Gateway? Why Enterprises Are Adopting a Control Plane for MCP](https://www.konghq.com/blog/mcp-gateway-enterprises)
 [^12]: [Secure Your AI Agents: A Deep Dive into Azure's MCP Gateway with Entra ID](https://learn.microsoft.com/azure/application-gateway/mcp-gateway-entra-integration)
+[^13]: [Code execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp)
+[^14]: [Cloudflare's Code Mode](https://blog.cloudflare.com/code-mode/)
 
 ### Additional Resources
 
