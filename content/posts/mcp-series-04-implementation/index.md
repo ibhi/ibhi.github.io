@@ -173,7 +173,7 @@ What happens under the hood?
 ## 5. Next Steps
 Congratulations! You have built a fully functional MCP server that connects to a real-world API, exposes Tools, Resources, and Prompts, and can run both locally and remotely.
 
-**Ready for the hard truth?** In the next post, we take on the role of devil's advocate and explore 5 core challenges of MCP—from complexity overhead to security concerns.
+**Ready for the hard truth?** In the next post, we take on the role of devil's advocate and explore 5 core challenges of MCP—from complexity overhead to security concerns. [Continue to Part 5]({{< ref "/posts/mcp-series-05-challenges" >}}).
 
 ## 6. References
 - [Build a MCP server](https://modelcontextprotocol.io/docs/develop/build-server)
