@@ -111,31 +111,30 @@ The **autonomous agent model**—where the Host decides which tools to call base
 - **Data Leakage**: Overly permissive servers leak data across sessions without proper user isolation
 {{< mermaid >}}
 graph TD
-    subgraph "Trust Zone: Local/Trusted"
-        User((User)) -->|"Untrusted Input"| Host[Host / App]
-        Host -->|"Control"| Client[MCP Client]
+    subgraph Local["Trust Zone: Local/Trusted"]
+        User((User))
+        Host[Host / App]
+        Client[MCP Client]
+        User -->|"Untrusted Input"| Host
+        Host -->|"Control"| Client
     end
 
-    subgraph "Trust Boundary 1: Transport"
-        B1{{Auth / TLS}}
-    end
+    B1((Auth / TLS))
 
-    Client -.-> B1
-    B1 -.-> Server
-
-    subgraph "Trust Zone: MCP Server"
+    subgraph ServerZone["Trust Zone: MCP Server"]
         Server[MCP Server]
     end
 
-    subgraph "Trust Boundary 2: Resource Auth"
-        B2{{API Keys / Scopes}}
-    end
+    B2((API Keys / Scopes))
+    Res[External Resources / APIs]
 
+    Client -.-> B1
+    B1 -.-> Server
     Server -.-> B2
-    B2 -.-> Res[External Resources / APIs]
+    B2 -.-> Res
 
-    linkStyle 5 stroke-dasharray: 5 5
-    linkStyle 7 stroke-dasharray: 5 5
+    style B1 stroke-dasharray: 5 5
+    style B2 stroke-dasharray: 5 5
 {{< /mermaid >}}
 ### Threat → Defense Strategy
 
@@ -305,11 +304,11 @@ When building MCP servers, design for agents, not humans:
 ---
 ## 6. Enterprise Path: MCP Gateway
 
-If these challenges feel overwhelming for production deployment, you're not alone. Enterprises are adopting **MCP Gateways**[^11][^12]—control planes that sit between AI agents and MCP servers, providing the security, state management, and governance that the protocol lacks.
+If these challenges feel overwhelming for production deployment, you're not alone. Enterprises are adopting **MCP Gateways**[^11]—control planes that sit between AI agents and MCP servers, providing the security, state management, and governance that the protocol lacks.
 
 **What MCP Gateways Solve:**
 
-- **Security**: Centralized OAuth 2.1/JWT authentication, tool-level authorization (scopes like `mcp:tool:read:email`), prompt injection detection, server catalog curation, and unified audit trails—no more implementing security in every server
+- **Security[^12]**: Centralized OAuth 2.1/JWT authentication, tool-level authorization (scopes like `mcp:tool:read:email`), prompt injection detection, server catalog curation, and unified audit trails—no more implementing security in every server
 
 - **Statefulness**: Session-aware routing that maintains `session_id` → backend mappings, handling connection lifecycle, reconnection, and failover transparently. Shifts the statefulness burden from protocol implementation to infrastructure (Azure APIM, Docker, Solo.io agentgateway)
 
