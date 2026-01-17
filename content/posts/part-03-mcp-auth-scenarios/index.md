@@ -1,12 +1,15 @@
 ---
-title: 'One Size Does Not Fit All: Matching Auth to Your MCP Deployment'
+title: 'MCP Security Part 3 - One Size Does Not Fit All: Matching Auth to Your MCP Deployment'
 description: Local dev, public server, enterprise—each MCP scenario needs a different auth approach. Pick wrong and you expose your server or over-engineer a simple tool. Learn to match auth to your deployment.
 tags:
   - MCP
   - Security
   - OAuth
 summary: Authentication choices in MCP depend heavily on deployment scenario. A local development server has different security needs than a public API or an enterprise integration. This post maps three common scenarios to their appropriate auth strategies, with a decision framework for choosing wisely.
-draft: true
+draft: false
+status: published
+published_date: 2025-01-17T00:00:00.000Z
+external_url: https://yourdomain.com/posts/part-03-mcp-auth-scenarios/
 series:
   - MCP Security Series
 series_order: 3
