@@ -6,12 +6,16 @@ tags:
   - Security
   - Prompt Injection
 summary: 'Parts 1-3 established the mental model, auth concepts, and deployment scenarios. Now we explore what actually goes wrong. This post examines MCP''s unique threat landscape: prompt injection as the novel attack vector, confused deputy problems in autonomous tool calling, data leakage through permissive servers, malicious servers using Sampling to attack Hosts, and why defense in depth is essential.'
-draft: true
+draft: false
 series:
   - MCP Security Series
 series_order: 4
+status: published
+published_date: '2026-01-25'
+external_url: http://127.0.0.1:1313/posts/part-04-mcp-threats
 date: '2026-01-25'
 ---
+
 
 
 ## TL;DR
