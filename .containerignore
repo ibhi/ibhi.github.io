@@ -1,0 +1,23 @@
+# Keep the build context small and identical to what CI checks out.
+.git
+**/.git
+.github
+.claude
+.playwright-mcp
+.mcp.json
+claude.md
+
+# Generated locally; the container builds its own
+public/
+public-preview/
+resources/
+hugo_stats.json
+.hugo_build.lock
+.hugo-staging/
+
+# Node artifacts (theme ships pre-compiled CSS, npm is not needed)
+node_modules/
+**/node_modules/
+
+*.log
+.DS_Store

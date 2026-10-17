@@ -33,6 +33,23 @@ blog/
 
 ## Commands
 
+### Container-based preview (Podman)
+
+Hugo, Dart Sass and nginx run in containers — nothing needs to be installed on the host except podman. The image pins the same tool versions as the GitHub Pages workflow (.github/workflows/hugo.yaml), so the preview matches production.
+
+```bash
+./preview.sh preview   # production build (same flags as CI) served on http://localhost:8080 — no drafts
+./preview.sh dev       # live-reloading Hugo server on http://localhost:1313 — drafts included
+./preview.sh stop      # stop the preview containers
+./preview.sh build     # build the preview image without starting it
+./preview.sh shell     # bash with hugo available, repo mounted at /site
+```
+
+Use `preview` to check exactly what will deploy; use `dev` while writing.
+Ports can be overridden: `DEV_PORT=2313 ./preview.sh dev`.
+
+Files: `Containerfile` (tools / builder / runtime stages), `.containerignore`, `preview.sh`.
+
 ### Development
 ```bash
 # Start development server with live reload
