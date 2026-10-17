@@ -41,7 +41,12 @@ enableEmoji = true
 [imaging]
   anchor = 'Center'
   resampleFilter = 'Lanczos'
-  hint = 'photo'
+
+  [imaging.webp]
+    hint = 'photo'
+
+  [imaging.avif]
+    hint = 'photo'
 
 [taxonomies]
   tag = "tags"

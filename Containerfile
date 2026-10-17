@@ -9,7 +9,7 @@
 #   builder  - builds the site into /site/public
 #   runtime  - nginx serving the built site on port 8080
 
-ARG HUGO_VERSION=0.153.1
+ARG HUGO_VERSION=0.167.0
 ARG DART_SASS_VERSION=1.97.1
 
 FROM docker.io/library/debian:bookworm-slim AS tools

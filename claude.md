@@ -5,7 +5,7 @@
 This is a Hugo static site blog using the **Blowfish** theme. The site focuses on technical content.
 
 **Theme**: Blowfish (https://github.com/nunocoracao/blowfish)
-**Hugo Version**: v0.153.2+extended+withdeploy
+**Hugo Version**: v0.167.0+extended (must stay within the Blowfish theme's supported window)
 
 ## Project Structure
 
