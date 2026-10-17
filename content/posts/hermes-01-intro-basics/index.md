@@ -91,9 +91,11 @@ This is where the mental model clicks: one loop, entered through messaging, equi
 
 {{< figure src="fig-5-cron.png" alt="Hand-drawn diagram: a clock at 07:00 fires a cron job, which starts a fresh agent session with an injected skill, delivers the result to your messaging platforms, and later jobs can chain context from earlier runs." >}}
 
-## 7. Next: What It's Actually Good For
+{{< figure src="images/hermes/hermes-agent-system.svg" alt="Architecture diagram of Hermes Agent: users reach one agent core either through direct surfaces (CLI, TUI, desktop app, web dashboard, IDE) or through the messaging gateway (Telegram, Discord, Slack and more, with the cron scheduler); the agent core runs the AIAgent loop and dispatches tool calls to terminal backends (local, Docker, SSH) and cloud backends (Daytona, Modal, Singularity); memory, skills and sessions live in ~/.hermes (MEMORY.md, state.db, curator); model calls fan out to hosted providers (Nous, OpenRouter, Anthropic, OpenAI, Google, xAI and more) or local and custom endpoints (Ollama, any OpenAI-compatible endpoint)." caption="The whole system on one page — one agent core, reached through direct surfaces or the messaging gateway, executing via terminal and cloud backends, with memory, skills and sessions in `~/.hermes` and model calls fanning out to hosted or local providers." >}}
 
-One honest caveat for this whole series: everything above is drawn from Hermes' own documentation and repository — it's what the project documents itself to be, not an independent review. Part 2 fixes that. We'll take this mental model into the real world and put it to work: actual use cases, what breaks, and what's genuinely useful. Stay tuned.
+## 7. What's Next
+
+One honest caveat for this whole series: everything above is drawn from Hermes' own documentation and repository — it's what the project documents itself to be, not an independent review. Part 2 opens the box: where the code actually runs, and what keeps it off your host — a close look at the terminal backends and the Docker container that acts as the isolation boundary. Stay tuned.
 
 ---
 

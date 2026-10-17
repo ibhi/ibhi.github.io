@@ -14,6 +14,7 @@ series:
   - 'MCP Security Series'
 series_order: 1
 date: '2026-01-03'
+lastmod: '2026-10-13'
 ---
 
 
@@ -21,7 +22,7 @@ date: '2026-01-03'
 
 - MCP involves **four actors** (User, Host, Client, Server)
 - **Two trust boundaries** matter: the first hop (Client → Server, your responsibility via OAuth 2.1) and the second hop (Server → Resources, separate auth per API)
-- **Never forward client tokens** to downstream APIs—your MCP server should obtain its own credentials for each resource
+- **Never forward client tokens** to downstream APIs—the spec now makes this a MUST; your MCP server should obtain its own credentials for each resource
 - MCP's **autonomous agent model** (the Host reasons about which tools to call) creates prompt injection risks beyond traditional APIs
 - **Clear trust boundaries** are the foundation—without them, your server can't distinguish legitimate requests from imposters
 
@@ -158,7 +159,7 @@ From your MCP server's perspective, the User, Host, and Client are all on the "o
 
 **Boundary 1: Client to Server** is your first responsibility as an MCP server developer. The MCP Client needs to prove it's acting on behalf of an authorized user. This is the **first hop** that the MCP specification governs, using OAuth 2.1 patterns. Your server validates tokens, checks scopes, and decides whether to accept or reject requests.
 
-As the [MCP authorization specification](https://modelcontextprotocol.io/docs/authorization/) states:
+As the [MCP authorization specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization#roles) states:
 
 > "A protected _MCP server_ acts as an [OAuth 2.1 resource server](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-13.html#name-roles), capable of accepting and responding to protected resource requests using access tokens." [^3]
 > "The _authorization server_ is responsible for interacting with the user (if necessary) and issuing access tokens for use at the MCP server. The implementation details of the authorization server are beyond the scope of this specification."[^3]
@@ -171,6 +172,8 @@ A critical security principle applies here: **don't pipe credentials through**. 
 >you shouldn't "use the same token and pass it straight through to that other resource server because you end up with token leakage risks." [^1]. 
 
 Your MCP server should obtain its own tokens for downstream APIs, not forward the token it received from the client.
+
+**Editor's update (October 2026):** what reads above as advice is now normative. The 2026-07-28 revision's Authorization Security Considerations state that "The MCP server MUST NOT pass through the token it received from the MCP client." [^5] Token passthrough graduated from security blog post to spec violation—treat it as a hard requirement, not a best practice.
 
 Think of it like that office building. The front desk, elevators, and lobby are all managed by someone else—that's the User/Host/Client domain. You're the secure department on floor 42. You have a badge reader at your door (Boundary 1), and you control what happens inside your office (Boundary 2). You don't worry about how visitors got into the building—you just verify they have the right badge before letting them in.
 
@@ -220,6 +223,8 @@ For now, you have the foundation: you understand who talks to whom, where trust 
 
 [^2]: Wils Dawson. "[MCP Authentication: The Confusing Parts Explained](https://www.youtube.com/watch?v=oVHuxXSxr8U)." Arcade. July 8, 2025.
 
-[^3]: Model Context Protocol. "[Authorization](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization#roles)." Official MCP Documentation.
+[^3]: Model Context Protocol. "[Authorization](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization#roles)." Official MCP Specification, 2026-07-28 revision. Accessed October 13, 2026. Quoted text is verbatim identical to the 2025-11-25 revision originally cited.
 
 [^4]: Simon Willison. "[Model Context Protocol has prompt injection security problems](https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/)." Simon Willison's Blog. April 9, 2025.
+
+[^5]: Model Context Protocol. "[Authorization Security Considerations](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization/security-considerations)." Official MCP Specification, 2026-07-28 revision. Accessed October 13, 2026.

@@ -1,7 +1,7 @@
 ---
 title: 'MCP Introduction Part 5 – The Devil''s Advocate: 5 Core Challenges of MCP'
 description: MCP solves integration problems, but it's not a silver bullet. Context window consumption, security vulnerabilities, stateful scaling, and governance gaps - here's what nobody tells you about production MCP deployments.
-date: 2026-01-06T00:00:00.000Z
+date: '2025-12-28'
 summary: 'A honest look at MCP''s trade-offs: resource exhaustion, security surface, statefulness tax, governance gaps, and design paradigm shifts you need to know before adopting MCP in production'
 tags:
   - MCP

@@ -10,7 +10,8 @@ draft: false
 series:
   - MCP Security Series
 series_order: 2
-date: '2026-01-05'
+date: '2026-01-04'
+lastmod: '2026-10-13'
 ---
 
 ## TL;DR
@@ -181,6 +182,8 @@ FastMCP's documentation explains:
 
 >"Token validation works well when you already have authentication infrastructure that can issue structured tokens like JWTs. Your existing API gateway, microservices platform, or enterprise SSO system becomes the source of truth for user identity, while your MCP server focuses on its core functionality." [^3]
 
+**Since we published (October 2026):** The [2026-07-28 spec revision](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization) turned two of this post's "checks" into hard MUSTs. Authorization servers SHOULD return the `iss` parameter (RFC 9207) and clients **MUST validate it**—mix-up defense for exactly the issuer confusion Section 4 warns about. And clients **MUST** pass the RFC 8707 `resource` parameter so tokens are audience-bound to your server—formalizing the audience check from the same section. [^4] The implementation landscape moved too: FastMCP is now at 4.x, with `TokenVerifier`, `OAuthProxy`, and `RemoteAuthProvider` unchanged under the same names, plus new additions—an `OAuthProvider` that runs a full in-process authorization server, `MultiAuth` for combining strategies, and CIMD support in OAuthProxy. [^5] The split this post describes—an external IdP authenticates, your server validates—hasn't moved an inch.
+
 Think of it like HTTP: the spec defines how clients and servers exchange messages, but you write the application logic. MCP gives you the OAuth language—you implement the conversation. We'll cover implementation details in Posts 5 and 6.
 
 ---
@@ -205,9 +208,13 @@ These concepts form the foundation for secure MCP servers. In Post 3, we'll expl
 
 ## References
 
-[^1]: Model Context Protocol. "[Understanding Authorization in MCP](https://modelcontextprotocol.io/docs/tutorials/security/authorization)." Official MCP Documentation.
+[^1]: Model Context Protocol. "[Understanding Authorization in MCP](https://modelcontextprotocol.io/docs/tutorials/security/authorization)." Official MCP Documentation. Accessed October 13, 2026.
 
 [^2]: Scalekit. "[Add OAuth 2.1 authorization to MCP servers](https://docs.scalekit.com/authenticate/mcp/quickstart/)." December 15, 2025.
 
-[^3]: FastMCP. "[Authentication](https://gofastmcp.com/servers/auth/authentication)." Documentation.
+[^3]: FastMCP. "[Authentication](https://gofastmcp.com/servers/auth/authentication)." Documentation. Accessed October 13, 2026. The quote above was re-verified verbatim against the current (4.x) documentation.
+
+[^4]: Model Context Protocol. "[Authorization](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization)." Official MCP Specification, 2026-07-28 revision. Accessed October 13, 2026. Per RFC 9207, authorization servers SHOULD return `iss` and clients MUST validate it; per RFC 8707, clients MUST pass the `resource` parameter.
+
+[^5]: FastMCP. "[Authentication](https://gofastmcp.com/servers/auth/authentication)" and "[Updates](https://gofastmcp.com/updates)." FastMCP Documentation. Accessed October 13, 2026. Version 4.x retains `TokenVerifier`, `OAuthProxy`, and `RemoteAuthProvider` under the same names; `OAuthProvider`, `MultiAuth`, and CIMD support in `OAuthProxy` were added after this post was written.
 

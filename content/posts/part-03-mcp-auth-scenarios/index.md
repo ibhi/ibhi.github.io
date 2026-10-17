@@ -13,7 +13,8 @@ external_url: https://yourdomain.com/posts/part-03-mcp-auth-scenarios/
 series:
   - MCP Security Series
 series_order: 3
-date: '2026-01-17'
+date: '2026-01-05'
+lastmod: '2026-10-13'
 ---
 
 
@@ -261,6 +262,8 @@ graph TD
 
 Enterprises want MCP servers to be resource servers that accept IdP-issued tokens. Aaron Parecki's "Enterprise-Ready MCP" proposes token exchange using OAuth 2.0 Token Exchange (RFC 8693) and JWT Profile for Authorization Grants (RFC 7523) [^5].
 
+**Since we published (October 2026):** the 2026-07-28 spec revision picked up part of this critique. It ships an extensions framework that includes **Enterprise Managed Authorization (EMA)**—an extension aimed at letting enterprises keep authorization centralized in their IdP rather than having every MCP server act as its own authorization server. [^6] EMA is early—don't refactor your gateway around it yet—but the direction matches what Solo.io and Parecki were asking for: the spec is growing an enterprise answer.
+
 **What Goes Wrong**:
 
 - Over-engineering - building an OAuth authorization server when the enterprise already has one
@@ -350,10 +353,12 @@ One size does not fit all. Know your scenario, choose accordingly, and evolve as
 
 [^2]: Model Context Protocol, "[Understanding Authorization in MCP](https://modelcontextprotocol.io/docs/tutorials/security/authorization)," accessed December 2025.
 
-[^3]: Model Context Protocol, "[Security Best Practices](https://modelcontextprotocol.io/specification/draft/basic/security_best_practices)," accessed December 2025.
+[^3]: Model Context Protocol, "[Security Best Practices](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices)," accessed October 13, 2026. Previously cited at the draft path, which still resolves but is stale.
 
 [^4]: Solo.io, "[MCP Authorization is a Non-Starter for Enterprise](https://www.solo.io/blog/mcp-authorization-is-a-non-starter-for-enterprise/)," 2025.
 
 [^5]: Aaron Parecki, "[Enterprise-Ready MCP](https://aaronparecki.com/2025/05/12/27/enterprise-ready-mcp)," May 12, 2025
+
+[^6]: Model Context Protocol. "[Announcing the 2026-07-28 Specification](https://blog.modelcontextprotocol.io/posts/2026-07-28/)." MCP Blog. Accessed October 13, 2026. Enterprise Managed Authorization (EMA) is defined under the revision's extensions framework.
 
 ---
