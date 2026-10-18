@@ -8,7 +8,7 @@ draft: true
 showHero: false
 ---
 
-{{< figure src="featured_inside-my-home-network.png" alt="Hand-drawn style diagram of a house divided into five labeled rooms — trusted wired, home Wi-Fi, kids Wi-Fi, smart gadgets, guest Wi-Fi — separated by fence lines, with one router standing at the gate to the internet and a side tunnel labelled Tailscale entering past the gate." >}}
+{{< figure src="featured_inside-my-home-network.png" alt="Diagram of the home network at a glance: the internet connects over fiber to a single OpenWrt router — the gatekeeper — which fans out over one trunk into five labeled zones inside a boundary marked nothing crosses without a rule: trusted wired (VLAN 1, 192.168.1.0/24), home Wi-Fi (VLAN 8, 192.168.8.0/24), kids Wi-Fi (VLAN 10, 192.168.10.0/24), smart home IoT (VLAN 20, 192.168.20.0/24), and guest Wi-Fi (VLAN 30, 192.168.30.0/24); a separate dashed Tailscale tunnel provides remote access with zero open ports." >}}
 
 **TL;DR:** My home network used to be one flat space where every device could talk to every other device. It's now five isolated zones behind one router, with a firewall that denies everything by default and opens narrow, deliberate paths where life actually requires them. This post walks through why that's worth doing, what the map looks like, how the DNS chain works, and — the part I'd most like you to take away — the five real holes I found when I audited my own configuration. No commands, no config dumps; just the architecture and the reasoning.
 
