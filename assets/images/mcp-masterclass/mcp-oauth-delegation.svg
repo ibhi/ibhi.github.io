@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1240 640" role="img" lang="en" aria-labelledby="mcp-delegation-title mcp-delegation-desc" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title id="mcp-delegation-title">MCP OAuth 2.1 delegation and stateless request flow</title>
+  <desc id="mcp-delegation-desc">Architecture diagram of the 2026 MCP authorization model: an MCP client behind a user obtains a token from an enterprise identity provider acting as the OAuth 2.1 Authorization Server, then sends stateless HTTP requests - each carrying _meta with protocol version, client info and capabilities plus an Authorization bearer token - through a load balancer that routes on the Mcp-Method and Mcp-Name headers to any MCP server instance acting as a pure OAuth 2.1 Resource Server, which verifies the token against the IdP's JWKS endpoint. No session state exists anywhere.</desc>
+  <style>
+    :root { color-scheme: light dark; }
+    .bg      { fill: #ffffff; }
+    .ink     { fill: #24292f; }
+    .muted   { fill: #57606a; }
+    .box     { fill: #f6f8fa; stroke: #24292f; stroke-width: 1.6; rx: 10; }
+    .idp     { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.8; }
+    .rs      { fill: #dafbe1; stroke: #1a7f37; stroke-width: 1.8; }
+    .edge    { fill: #fff8c5; stroke: #9a6700; stroke-width: 1.8; }
+    .flow    { stroke: #24292f; stroke-width: 1.8; fill: none; marker-end: url(#arr); }
+    .flow-idp{ stroke: #0969da;  stroke-width: 1.8; fill: none; marker-end: url(#arr-b); }
+    .dash    { stroke-dasharray: 6 5; }
+    .lbl     { font-size: 13.5px; }
+    .small   { font-size: 12px; }
+    .title   { font-size: 15px; font-weight: 600; }
+    @media (prefers-color-scheme: dark) {
+      .bg      { fill: #0d1117; }
+      .ink     { fill: #e6edf3; }
+      .muted   { fill: #8b949e; }
+      .box     { fill: #161b22; stroke: #e6edf3; }
+      .idp     { fill: #121d2f; stroke: #58a6ff; }
+      .rs      { fill: #12261a; stroke: #3fb950; }
+      .edge    { fill: #272215; stroke: #d29922; }
+      .flow    { stroke: #e6edf3; marker-end: url(#arr-d); }
+      .flow-idp{ stroke: #58a6ff; marker-end: url(#arr-bd); }
+    }
+  </style>
+  <defs>
+    <marker id="arr"  viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#24292f"/></marker>
+    <marker id="arr-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0969da"/></marker>
+    <marker id="arr-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e6edf3"/></marker>
+    <marker id="arr-bd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#58a6ff"/></marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1240" height="640"/>
+
+  <!-- Client -->
+  <rect class="box" x="40" y="250" width="230" height="130" rx="10"/>
+  <text class="ink title" x="155" y="295" text-anchor="middle">User + MCP Client</text>
+  <text class="muted small" x="155" y="320" text-anchor="middle">OAuth 2.1 Client</text>
+  <text class="muted small" x="155" y="340" text-anchor="middle">public client, PKCE</text>
+
+  <!-- IdP / AS -->
+  <rect class="idp" x="470" y="60" width="300" height="120" rx="10"/>
+  <text class="ink title" x="620" y="100" text-anchor="middle">Enterprise IdP</text>
+  <text class="ink small"  x="620" y="124" text-anchor="middle">OAuth 2.1 Authorization Server</text>
+  <text class="muted small" x="620" y="146" text-anchor="middle">Keycloak / Entra ID / Okta / Auth0</text>
+  <text class="muted small" x="620" y="164" text-anchor="middle">signs tokens &#183; consent &#183; MFA &#183; revocation</text>
+
+  <!-- Edge / LB -->
+  <rect class="edge" x="470" y="270" width="300" height="90" rx="10"/>
+  <text class="ink title" x="620" y="305" text-anchor="middle">Load balancer / WAF</text>
+  <text class="muted small" x="620" y="328" text-anchor="middle">plain round-robin &#183; no sticky sessions</text>
+  <text class="muted small" x="620" y="346" text-anchor="middle">routes on Mcp-Method / Mcp-Name</text>
+
+  <!-- RS instances -->
+  <rect class="rs" x="900" y="180" width="300" height="120" rx="10"/>
+  <text class="ink title" x="1050" y="220" text-anchor="middle">MCP server instance 1</text>
+  <text class="ink small"  x="1050" y="244" text-anchor="middle">OAuth 2.1 Resource Server</text>
+  <text class="muted small" x="1050" y="266" text-anchor="middle">verifies JWT against JWKS</text>
+  <text class="muted small" x="1050" y="284" text-anchor="middle">zero state between requests</text>
+
+  <rect class="rs" x="900" y="390" width="300" height="120" rx="10"/>
+  <text class="ink title" x="1050" y="430" text-anchor="middle">MCP server instance 2</text>
+  <text class="ink small"  x="1050" y="454" text-anchor="middle">OAuth 2.1 Resource Server</text>
+  <text class="muted small" x="1050" y="476" text-anchor="middle">identical, interchangeable</text>
+  <text class="muted small" x="1050" y="494" text-anchor="middle">any request, any instance</text>
+
+  <!-- Flows -->
+  <!-- client -> IdP: authorize -->
+  <path class="flow-idp" d="M170,250 L170,120 L470,120"/>
+  <text class="lbl ink" x="196" y="104">1. authorize: PKCE + resource = canonical URI</text>
+
+  <!-- IdP -> client: token -->
+  <path class="flow-idp dash" d="M300,150 C260,150 240,160 230,185" />
+  <text class="lbl ink" x="248" y="176">2. token, aud = this MCP server</text>
+
+  <!-- client -> edge -->
+  <path class="flow" d="M270,315 L470,315"/>
+  <text class="lbl ink" x="284" y="390">3. every request carries its own context:</text>
+  <text class="muted small" x="284" y="410">Authorization: Bearer &#183; _meta { protocolVersion, clientInfo,</text>
+  <text class="muted small" x="284" y="428">clientCapabilities } &#183; Mcp-Method / Mcp-Name</text>
+
+  <!-- edge -> instances -->
+  <path class="flow" d="M770,295 L900,250"/>
+  <path class="flow" d="M770,335 L900,440"/>
+
+  <!-- instance -> IdP: JWKS -->
+  <path class="flow-idp dash" d="M1010,180 L1010,120 L770,112"/>
+  <text class="lbl ink" x="820" y="88">JWKS key fetch / rotation</text>
+
+  <!-- stateless note -->
+  <rect class="box" x="470" y="470" width="300" height="80" rx="10"/>
+  <text class="ink small" x="620" y="500" text-anchor="middle">no session store, no connection pinning,</text>
+  <text class="ink small" x="620" y="520" text-anchor="middle">no shared state: "servers MUST NOT rely</text>
+  <text class="ink small" x="620" y="538" text-anchor="middle">on prior requests to establish context"</text>
+
+  <!-- server never mints -->
+  <text class="muted small" x="1050" y="560" text-anchor="middle">the server never signs tokens, never shows consent,</text>
+  <text class="muted small" x="1050" y="578" text-anchor="middle">never stores a client credential</text>
+</svg>
