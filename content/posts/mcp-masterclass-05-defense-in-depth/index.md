@@ -112,7 +112,7 @@ So what does a good event look like? The structured JSON example below is **my o
   "user_sub": "usr_998234a",
   "server_uri": "https://mcp-db.example.com",
   "tool_name": "query_records",
-  "tool_hash": "e3b0c44298fc1c149afbf4c8996fb924...",
+  "tool_hash": "52dc018812d2e854b774bec53f8ea8c801ae2ac7d9c5ec7cec738d65d3e5356d",
   "granted_scopes": ["db:read"],
   "duration_ms": 42,
   "status": "success"
