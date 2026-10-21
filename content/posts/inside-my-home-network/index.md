@@ -4,7 +4,7 @@ description: "How one homeowner split a home network into five VLANs with a defa
 date: '2026-10-18'
 summary: "Five zones on one router, nothing trusted by default, DNS that can't be quietly bypassed, and remote access without a single open door — plus the five mistakes my own audit found."
 tags: ["Home Network", "Security", "Networking"]
-draft: true
+draft: false
 showHero: false
 ---
 
@@ -14,7 +14,7 @@ showHero: false
 
 ## 1. Why Segment a Home at All?
 
-A typical home network is an apartment building where every door stands open. Your laptop, the kids' tablets, the TV, a smart plug, a light bulb, and your guest's phone all live on the same network — and by default, any of them can knock on any other's door. The TV doesn't need to talk to the laptop with the tax returns. The internet-connected doorbell has no business reaching the backup drive. But on a flat network, nobody told them that.
+A typical home network is an apartment building where every door stands open. Your laptop, the kids' tablets, the TV, a smart plug, a light bulb, and your guest's phone all live on the same network — and by default, any of them can knock on any other's door. The TV doesn't need to talk to the laptop with the tax returns. The internet-connected doorbell has no business reaching the photos on the data drive in my home NAS. But on a flat network, nobody told them that.
 
 This is not a hypothetical worry. In 2016, the Mirai botnet infected over 600,000 vulnerable internet-of-things devices — home routers, air-quality monitors, surveillance cameras — and used them to knock major websites offline [^1]. That wasn't a one-off: researchers tracking IoT threats in 2023 found malware families descended from Mirai still active, with weak device passwords still the primary way in [^2]. The gadgets are the softest target in the house, and a flat network hands them the run of the place.
 
@@ -24,7 +24,7 @@ So that's the project this post describes: put fences inside the house. Not beca
 
 ## 2. The Map: One Router, Five Zones
 
-The whole setup runs on a single small router — a GL.iNet Beryl — running OpenWrt, an open-source router operating system. (The software a router runs is called its *firmware*; replacing the manufacturer's default with something like OpenWrt is like replacing a locked-down appliance with a general-purpose computer.) You don't need this specific hardware for the ideas; you need firmware that supports the one feature everything else builds on: **VLANs**.
+The whole setup runs on a single small router — a GL.iNet router — running OpenWrt, an open-source router operating system. (The software a router runs is called its *firmware*; replacing the manufacturer's default with something like OpenWrt is like replacing a locked-down appliance with a general-purpose computer.) You don't need this specific hardware for the ideas; you need firmware that supports the one feature everything else builds on: **VLANs**.
 
 A VLAN — virtual local area network — is an invisible wall drawn inside the network wiring. The standard that defines them (IEEE 802.1Q) is the same technology businesses use to slice one physical office network into many logical ones [^4]. To the devices, each VLAN looks like its own private network; they can't see the others exist. One physical cable from the router carries all of them, tagged like mail sorted into different bins.
 
@@ -32,15 +32,15 @@ Every zone gets an address range from the private space (192.168.x.x) that never
 
 | Zone | VLAN | Addresses | Who lives there |
 |---|---|---|---|
-| Trusted wired | 1 | 192.168.1.0/24 | The desktop, the server, the stuff I administer |
-| Home Wi-Fi | 8 | 192.168.8.0/24 | Our phones and laptops, the TV |
+| Trusted wired | 1 | 192.168.1.0/24 | The desktop, the Proxmox server, the stuff I administer |
+| Home Wi-Fi | 8 | 192.168.8.0/24 | Our phones and laptops, the music streamers |
 | Kids Wi-Fi | 10 | 192.168.10.0/24 | The children's devices, on a leash (more below) |
-| Smart home (IoT) | 20 | 192.168.20.0/24 | Lights, plugs, sensors, the solar inverter, the automation hub |
+| Smart home (IoT) | 20 | 192.168.20.0/24 | Lights, plugs, sensors, the TV, the solar inverter, the automation hub |
 | Guest Wi-Fi | 30 | 192.168.30.0/24 | Visitors — polite but distrusted |
 
 The fiber line from the internet provider arrives on its own tagged VLAN, separate from all of the above. Wi-Fi security is WPA2/WPA3 — WPA3 being the newest Wi-Fi protection standard, which resists password-guessing attempts far better than its predecessor [^6] — with a fast-roaming feature so phones switch between access points without dropping calls [^7].
 
-{{< figure src="fig-1-network-map.png" alt="Diagram of the home network: a fiber internet line and a Tailscale tunnel enter a GL.iNet Beryl router running OpenWrt; from the router, one cable fans out into five labeled zones — trusted wired (VLAN 1, 192.168.1.0/24), home Wi-Fi (VLAN 8, 192.168.8.0/24), kids Wi-Fi (VLAN 10, 192.168.10.0/24), smart home IoT (VLAN 20, 192.168.20.0/24), and guest Wi-Fi (VLAN 30, 192.168.30.0/24) — each zone sending its DNS lookups through one of two AdGuard Home filters before reaching the unbound resolver on the router, with a narrow pinhole path from the Home Assistant hub to the TV and the solar inverter." >}}
+{{< figure src="fig-1-network-map.png" alt="Diagram of the home network: a fiber internet line and a Tailscale tunnel enter a GL.iNet router running OpenWrt; from the router, one cable fans out into five labeled zones — trusted wired (VLAN 1, 192.168.1.0/24), home Wi-Fi (VLAN 8, 192.168.8.0/24), kids Wi-Fi (VLAN 10, 192.168.10.0/24), smart home IoT (VLAN 20, 192.168.20.0/24, including the TV), and guest Wi-Fi (VLAN 30, 192.168.30.0/24) — each zone sending its DNS lookups through one of two AdGuard Home filters before reaching the unbound resolver on the router, with three narrow pinhole paths out of the smart home IoT zone from the Home Assistant hub: to the music streamers and the phone in home Wi-Fi, and to the Proxmox server in the trusted wired zone." >}}
 
 ## 3. Who Can Talk to Whom: Default-Deny, With Pinholes
 
@@ -50,7 +50,7 @@ Concretely:
 
 - The kids', smart-home, and guest zones cannot reach the router's own settings, and cannot reach any other zone. Their traffic to anywhere internal is rejected outright — not stealthily dropped, just told "no."
 - Each zone *can* reach the internet, because that's what the devices are for. But connections from the internet cannot start anything inward (more on that in section 6).
-- Where life genuinely requires a path, there's a **pinhole** — a rule allowing one specific thing, not a corridor. The automation hub (Home Assistant, the open-source brain of the smart home) lives in the smart-home zone and is the only device there with any cross-zone privileges at all: it may reach the admin screens of the two DNS filters, one solar inverter gateway, and the TV. That's the entire list. Everything else in the smart-home zone sees only the internet.
+- Where life genuinely requires a path, there's a **pinhole** — a rule allowing one specific thing, not a corridor. The automation hub (Home Assistant, the open-source brain of the smart home) lives in the smart-home zone and is the only device there with any cross-zone privileges at all: it may reach the music streamers and our phones on the home Wi-Fi zone, and the Proxmox server on the trusted wired zone — one device, one reason, each. That's the entire list. Everything else in the smart-home zone sees only the internet.
 - Discovery traffic — mDNS, the mechanism devices use to shout "anyone here called 'printer'?" on the local network [^9] — is allowed only in the zones where casting and printing actually need it. That shouting doesn't cross VLAN walls by design, which is exactly the point: your guest's phone announcing itself can't be heard in the kids' zone.
 - And one rule the kids would happily delete: their zone loses internet access on a schedule, 21:30 to 06:00. The fence does parenting duty too.
 
