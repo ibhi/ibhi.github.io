@@ -6,18 +6,11 @@ date: '2026-10-15'
 tags: ["Hermes Agent", "AI Agents", "GenAI"]
 series: ["Hermes Agent Series"]
 series_order: 3
-draft: true
+draft: false
 showHero: false
 ---
 
-<!-- TODO figure: featured_hermes-03-better-safe-than-sorry.png (2816x1536, hand-drawn).
-     Suggested: a laptop with walls being built around it in three stages — the agent
-     loop loose on the desk, then boxed into a gateway container, then its tools
-     sandboxed inside a larger builder box; the host's daemon socket drawn as a locked
-     door with a "never expose" scrawl; four small agent loops sharing the builder.
-     Alt text: "Hand-drawn diagram: an agent moved in three stages from loose on a host,
-     into a rootless gateway container, into sandboxes inside a builder container — with
-     the host socket drawn locked." -->
+{{< figure src="featured_hermes-03-better-safe-than-sorry.png" alt="Hand-drawn diagram: an agent moved in three stages from loose on a host, into a rootless gateway container, into sandboxes inside a builder container — with the host socket drawn locked." >}}
 
 **TL;DR:** Part 2 told the move to the Docker backend as one clean config change. This post is the road that led there. I started with a plain local install of Hermes, realised how much of my host the agent could touch, and built walls in stages: Hermes itself into rootless Podman, execution into a builder sidecar that plays Docker daemon without ever exposing my host socket, and finally a fleet of profiles whose sandboxes all land inside that one builder. The theme fits in one sentence: the agent should not be able to touch my host.
 

@@ -6,7 +6,7 @@ date: '2026-10-14'
 tags: ["Hermes Agent", "AI Agents", "GenAI"]
 series: ["Hermes Agent Series"]
 series_order: 2
-draft: true
+draft: false
 showHero: false
 ---
 
